@@ -2,7 +2,7 @@ tasks:
     hello:
         name: Hello World
         command: |
-            echo "Hello, World!"
+            npm run dev
         triggeredBy:
         - manual
         # - postEnvironmentStart
@@ -14,12 +14,7 @@ services:
         description: Example service simulating a backend
         commands:
             start: |
-                echo "Starting backend service..."
-                touch /tmp/backend.started
-                while true; do
-                    sleep 1
-                    date
-                done
+                npm run dev
             ready: |
                 if [ -f /tmp/backend.started ]; then
                     echo "Backend service is ready"
