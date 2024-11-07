@@ -1,0 +1,28 @@
+# Fichier de configuration gitpod.yml
+
+image:
+  file: .gitpod.Dockerfile  # Définir une image Docker personnalisée (optionnel)
+
+# Commandes exécutées automatiquement lors de l'initialisation de l’espace de travail Gitpod
+tasks:
+  - init: |
+      npm install       # Installation des dépendances Node.js
+      npm run build     # Compilation du code TypeScript
+    command: npm run dev  # Démarrage de l’application en mode développement
+
+# Port forwarding - redirige les ports nécessaires pour voir l’application en cours d’exécution
+ports:
+  - port: 3000    # Exemple de port, remplacez-le par celui utilisé par votre application
+    onOpen: open-preview
+
+# Configuration des extensions VSCode à installer automatiquement dans l’environnement Gitpod
+vscode:
+  extensions:
+    - dbaeumer.vscode-eslint       # Extension ESLint
+    - esbenp.prettier-vscode       # Extension Prettier pour le formatage du code
+    - ms-vscode.vscode-typescript-tslint-plugin # Extension TSLint pour TypeScript
+
+# Variables d’environnement (facultatif, utile pour les API keys, configuration, etc.)
+env:
+  NODE_ENV: "development"       # Mode de l'application
+  API_URL: "https://api.example.com"  # Exemple d'API (modifiez selon votre besoin)

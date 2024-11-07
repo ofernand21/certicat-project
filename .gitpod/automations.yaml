@@ -1,32 +1,50 @@
 tasks:
-    hello:
-        name: Hello World
+    setup:
+        name: Initial Setup
         command: |
-            npm run dev
-        triggeredBy:
-        - manual
-        # - postEnvironmentStart
-        # - postDevcontainerStart
-
-services:
-    backend:
-        name: Backend Service
-        description: Example service simulating a backend
-        commands:
-            start: |
-                npm run dev
-            ready: |
-                if [ -f /tmp/backend.started ]; then
-                    echo "Backend service is ready"
-                    exit 0
-                else
-                    echo "Backend service is not ready"
-                    exit 1
-                fi
-            # stop: |
-            # 	echo "Stopping backend service..."
-            # 	rm /tmp/backend.started
-            #   pkill backend
+            echo "Installing dependencies..."
+            npm install
+            echo "Building TypeScript code..."
+            npm run build
         triggeredBy:
             - postEnvironmentStart
-            # - postDevcontainerStart
+
+    start-dev:
+        name: Start Development Server
+        command: |
+            echo "Starting development server..."
+            npm run dev
+        triggeredBy:
+            - manual
+
+services:
+    node-server:
+        name: Node.js Server
+        description: Backend Node.js server for the application
+        commands:
+            start: |
+                echo "Starting the Node.js server..."
+                npm run dev &
+                touch /tmp/node-server.started
+            ready: |
+                if [ -f /tmp/node-server.started ]; then
+                    echo "Node.js server is ready"
+                    exit 0
+                else
+                    echo "Node.js server is not ready"
+                    exit 1
+                fi
+        triggeredBy:
+            - postEnvironmentStart
+
+# Configuration des ports si besoin (facultatif)
+ports:
+  - port: 8000
+    onOpen: open-preview
+
+# Extensions recommandées pour VSCode dans Gitpod
+vscode:
+  extensions:
+    - dbaeumer.vscode-eslint
+    - esbenp.prettier-vscode
+    - ms-vscode.vscode-typescript-tslint-plugin
