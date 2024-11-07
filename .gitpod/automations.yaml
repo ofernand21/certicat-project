@@ -6,7 +6,7 @@ tasks:
             npm install
             echo "Building TypeScript code..."
             npm run build
-        triggeredBy:
+            triggeredBy:
             - postEnvironmentStart
 
     start-dev:
@@ -14,7 +14,7 @@ tasks:
         command: |
             echo "Starting development server..."
             npm run dev
-        triggeredBy:
+            triggeredBy:
             - manual
 
 services:
@@ -22,29 +22,17 @@ services:
         name: Node.js Server
         description: Backend Node.js server for the application
         commands:
-            start: |
-                echo "Starting the Node.js server..."
-                npm run dev &
-                touch /tmp/node-server.started
-            ready: |
-                if [ -f /tmp/node-server.started ]; then
-                    echo "Node.js server is ready"
-                    exit 0
-                else
-                    echo "Node.js server is not ready"
-                    exit 1
-                fi
+        start: |
+            echo "Starting the Node.js server..."
+            npm run dev &
+            touch /tmp/node-server.started
+        ready: |
+            if [ -f /tmp/node-server.started ]; then
+            echo "Node.js server is ready"
+            exit 0
+            else
+            echo "Node.js server is not ready"
+            exit 1
+            fi
         triggeredBy:
             - postEnvironmentStart
-
-# Configuration des ports si besoin (facultatif)
-ports:
-  - port: 8000
-    onOpen: open-preview
-
-# Extensions recommandées pour VSCode dans Gitpod
-vscode:
-  extensions:
-    - dbaeumer.vscode-eslint
-    - esbenp.prettier-vscode
-    - ms-vscode.vscode-typescript-tslint-plugin
