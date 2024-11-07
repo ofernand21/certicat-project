@@ -6,7 +6,7 @@ tasks:
             npm install
             echo "Building TypeScript code..."
             npm run build
-            triggeredBy:
+        triggeredBy:
             - postEnvironmentStart
 
     start-dev:
@@ -14,7 +14,7 @@ tasks:
         command: |
             echo "Starting development server..."
             npm run dev
-            triggeredBy:
+        triggeredBy:
             - manual
 
 services:
