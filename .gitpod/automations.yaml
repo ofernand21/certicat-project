@@ -4,6 +4,7 @@ tasks:
         command: |
             curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
             sudo apt-get install -y nodejs
+            npm install ts-node-dev --save-dev
             echo "Installing dependencies..."
             npm install
             echo "Building TypeScript code..."
