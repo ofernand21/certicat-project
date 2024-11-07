@@ -22,17 +22,17 @@ services:
         name: Node.js Server
         description: Backend Node.js server for the application
         commands:
-        start: |
-            echo "Starting the Node.js server..."
-            npm run dev &
-            touch /tmp/node-server.started
-        ready: |
-            if [ -f /tmp/node-server.started ]; then
-            echo "Node.js server is ready"
-            exit 0
-            else
-            echo "Node.js server is not ready"
-            exit 1
-            fi
+            start: |
+                echo "Starting the Node.js server..."
+                npm run dev &
+                touch /tmp/node-server.started
+            ready: |
+                if [ -f /tmp/node-server.started ]; then
+                echo "Node.js server is ready"
+                exit 0
+                else
+                echo "Node.js server is not ready"
+                exit 1
+                fi
         triggeredBy:
             - postEnvironmentStart
